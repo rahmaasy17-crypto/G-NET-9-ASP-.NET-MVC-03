@@ -1,13 +1,26 @@
+using GymManagement.BLL.Services.Interfaces;
+using GymManagement.DAL.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymManagement.PL.Controllers
 {
     public class MembersController : Controller
     {
+        private readonly IMemberService _memberService;
+        public MembersController(IMemberService memberService)
+        {
+            _memberService = memberService;
+        }
+
         #region Index
         //Index() >list all members 
         //GET baseurl/Members/Index 
 
+       public async Task<IActionResult> Index(CancellationToken c ) 
+        { 
+            var members= await _memberService.GetAllMemberAsync(c);
+            return  View(members);   
+        }
 
         #endregion
 

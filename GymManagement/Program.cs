@@ -1,3 +1,5 @@
+using GymManagement.BLL.Services.Classes;
+using GymManagement.BLL.Services.Interfaces;
 using GymManagement.DAL.Data.DbContexts;
 using GymManagement.DAL.Repositories.classes;
 using GymManagement.DAL.Repositories.interfaces;
@@ -19,7 +21,7 @@ namespace GymManagement
             builder.Services.AddDbContext<GymDbContext>(options => {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 });
-
+            builder.Services.AddScoped<IMemberService,MemberService>();
 
 
 
