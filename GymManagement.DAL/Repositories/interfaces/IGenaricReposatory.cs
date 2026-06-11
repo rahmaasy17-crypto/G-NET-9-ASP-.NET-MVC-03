@@ -3,6 +3,7 @@ using GymManagement.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,5 +17,7 @@ namespace GymManagement.DAL.Repositories.interfaces
         Task<int> UpdateAsync(TEntity entity);
 
         Task<int> DeleteAsync(TEntity entity);
+         Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate ,CancellationToken c);
     }
+
 }

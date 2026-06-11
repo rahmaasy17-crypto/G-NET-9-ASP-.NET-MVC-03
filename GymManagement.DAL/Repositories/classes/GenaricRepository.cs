@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,6 +53,10 @@ namespace GymManagement.DAL.Repositories.classes
             IQueryable<TEntity> query = tracking ? _set : _set.AsNoTracking();
             return await query.ToListAsync();
         }
-      
+
+       public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken n)
+        {
+            return _set.AsNoTracking().AnyAsync(predicate, n);  
+        }
     }
 }
