@@ -1,6 +1,8 @@
-using GymManagement.BLL.Services.Interfaces;
+﻿using GymManagement.BLL.Services.Interfaces;
+using GymManagement.BLL.ViewModels.MemberViewModels;
 using GymManagement.DAL.Data.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace GymManagement.PL.Controllers
 {
@@ -42,6 +44,15 @@ namespace GymManagement.PL.Controllers
         public IActionResult Create() => View();
         //CreateMember() >subbmit form 
         //post baseurl/Members/Create{Members} 
+        [HttpPost]
+        public async Task<IActionResult> CreateMember(CreateMemberViewModel model,CancellationToken c)
+        {
+            //before talking with service
+            if (!ModelState.IsValid) return View(nameof(Create),model); //ارجع لنفس الفورم ومعاك البيانات والأخطاء.
+           var result=await   _memberService.CreateMemberAsync(model,c);
+            return RedirectToAction(nameof(Index));//have 2 div depend on result[create or not]
+        }
+     
         #endregion
 
         #region Editing Member > 2 steps
