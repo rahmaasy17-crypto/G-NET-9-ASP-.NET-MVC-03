@@ -47,9 +47,13 @@ namespace GymManagement.PL.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateMember(CreateMemberViewModel model,CancellationToken c)
         {
-            //before talking with service
-            if (!ModelState.IsValid) return View(nameof(Create),model); //ارجع لنفس الفورم ومعاك البيانات والأخطاء.
+            //before talking with service [imp even if i di clint side validation because frontand can do inspect and change clint side validation and send request with invalid data]
+            if (!ModelState.IsValid) return View(nameof(Create),model); //ارجع لنفس الفورم ومعاك البيانات والأخطاء]
            var result=await   _memberService.CreateMemberAsync(model,c);
+            if (result)
+                TempData["successMessage"] = "Member Created Successfully";
+            else
+                TempData["ErrorMessage"] = "Failed to Create Member";
             return RedirectToAction(nameof(Index));//have 2 div depend on result[create or not]
         }
      
